@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -5,6 +9,39 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        baseUrl: process.env.WORDPRESS_URL,
+        protocol: "https",
+        restApiRoutePrefix: "wp-json",
+        hostingWPCOM: false,
+        useACF: false,
+        acfOptionPageIds: [],
+        verboseOutput: false,
+        perPage: 100,
+        concurrentRequests: 10,
+        includedRoutes: [
+          // "**/categories",
+          // "**/posts",
+          // "**/pages",
+          // "**/tags",
+          // "**/taxonomies",
+          // "**/users",
+          "**/media",
+          "**/project",
+          "**/organisation",
+          "**/status",
+          "**/sector",
+          "**/technology",
+          "**/global_goal",
+        ],
+        // Blacklisted routes using glob patterns
+        excludedRoutes: ["**/posts/1456"],
+        keepMediaSizes: false,
+      },
+    },
+    `gatsby-plugin-material-ui`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
